@@ -3,6 +3,7 @@ package daphnia
 import (
 	"encoding/gob"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -24,6 +25,7 @@ type VectorStore struct {
 }
 
 // Initialize initializes the VectorStore with the given path.
+/*
 func (vs *VectorStore) Initialize(path string) error {
 	// Register types for gob encoding
 	gob.Register(VectorRecord{})
@@ -31,6 +33,27 @@ func (vs *VectorStore) Initialize(path string) error {
 	pl, err := artemia.NewPrevalenceLayer(path)
 	if err != nil {
 		return err
+	}
+	vs.pl = pl
+	return nil
+}
+*/
+
+func (vs *VectorStore) Initialize(path string) error {
+	// Register types for gob encoding
+	gob.Register(VectorRecord{})
+
+	pl, err := artemia.NewPrevalenceLayer(path)
+	if err != nil {
+		// If the file doesn't exist, create a new one
+		if os.IsNotExist(err) {
+			pl, err = artemia.NewPrevalenceLayer(path)
+			if err != nil {
+				return fmt.Errorf("failed to create new prevalence layer: %w", err)
+			}
+		} else {
+			return fmt.Errorf("failed to open prevalence layer: %w", err)
+		}
 	}
 	vs.pl = pl
 	return nil
@@ -47,7 +70,6 @@ func (vs *VectorStore) Get(id string) (VectorRecord, error) {
 	}
 	return VectorRecord{}, fmt.Errorf("value not found")
 }
-
 
 func (vs *VectorStore) GetAll() ([]VectorRecord, error) {
 	var vectorRecords []VectorRecord
