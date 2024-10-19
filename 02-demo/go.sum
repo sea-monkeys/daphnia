@@ -1,0 +1,4 @@
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/sea-monkeys/artemia v0.0.0 h1:RyRCq33f5nInnN7xsmqZwTPyihdELo81dO8hvTfdYik=
+github.com/sea-monkeys/artemia v0.0.0/go.mod h1:BY5pAPG+YwIn1j7sGMOZJyQLIvKKkIipeXOm/Ok2Mx0=
