@@ -12,14 +12,15 @@ import (
 )
 
 type VectorRecord struct {
-	Id                string    `json:"id"`
-	Prompt            string    `json:"prompt"` // chunk of text that the vector represents
-	Embedding         []float64 `json:"embedding"`
-	CosineDistance    float64
-	EuclideanDistance float64
-	Metadata          map[string]interface{}
-	CreatedAt         time.Time
-	ExpiresAt         time.Time
+	Id             string    `json:"id"`
+	Prompt         string    `json:"prompt"` // chunk of text that the vector represents
+	Embedding      []float64 `json:"embedding"`
+	CosineDistance float64
+	Metadata       map[string]interface{} `json:"metadata"` // additional metadata
+
+	// If you want to manage the life time of the vector record
+	CreatedAt      time.Time              `json:"created_at"`
+	ExpiresAt      time.Time              `json:"expires_at"`
 }
 
 type VectorStore struct {
@@ -27,20 +28,6 @@ type VectorStore struct {
 }
 
 // Initialize initializes the VectorStore with the given path.
-/*
-func (vs *VectorStore) Initialize(path string) error {
-	// Register types for gob encoding
-	gob.Register(VectorRecord{})
-
-	pl, err := artemia.NewPrevalenceLayer(path)
-	if err != nil {
-		return err
-	}
-	vs.pl = pl
-	return nil
-}
-*/
-
 func (vs *VectorStore) Initialize(path string) error {
 	// Register types for gob encoding
 	gob.Register(VectorRecord{})
