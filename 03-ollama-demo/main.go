@@ -60,7 +60,7 @@ func main() {
 
 	}
 
-	// Embbeding the question - search for the closest chunk(s)
+	// Embbeding of the question - search for the closest chunk(s)
 	reqEmbedding := &api.EmbeddingRequest{
 		Model:  "mxbai-embed-large:latest",
 		Prompt: "What are the T-800 Strengths?",

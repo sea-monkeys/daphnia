@@ -7,7 +7,7 @@ import (
 
 func main() {
     // Initialize Daphnia
-    vs := &daphnia.VectorStore{}
+    vs := daphnia.VectorStore{}
     vs.Initialize("terminator_facts.gob")
 
     // Store some Terminator facts

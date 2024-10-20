@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-    vs := &daphnia.VectorStore{}
+    vs := daphnia.VectorStore{}
     vs.Initialize("meme_database.gob")
 
     // Store some memes
