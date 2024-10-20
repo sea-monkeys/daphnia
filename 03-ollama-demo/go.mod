@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	github.com/ollama/ollama v0.3.13
 	github.com/sea-monkeys/artemia v0.0.0 // indirect
-	github.com/sea-monkeys/daphnia v0.0.1
+	github.com/sea-monkeys/daphnia v0.0.2
 
 )
 
