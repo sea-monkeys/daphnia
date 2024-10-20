@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/google/uuid"
@@ -11,13 +12,14 @@ import (
 )
 
 type VectorRecord struct {
-	Id             string    `json:"id"`
-	Prompt         string    `json:"prompt"` // chunk of text that the vector represents
-	Embedding      []float64 `json:"embedding"`
-	CosineDistance float64
-	Metadata       map[string]interface{}
-	CreatedAt      time.Time
-	ExpiresAt      time.Time
+	Id                string    `json:"id"`
+	Prompt            string    `json:"prompt"` // chunk of text that the vector represents
+	Embedding         []float64 `json:"embedding"`
+	CosineDistance    float64
+	EuclideanDistance float64
+	Metadata          map[string]interface{}
+	CreatedAt         time.Time
+	ExpiresAt         time.Time
 }
 
 type VectorStore struct {
@@ -138,5 +140,18 @@ func (vs *VectorStore) SearchTopNSimilarities(embeddingFromQuestion VectorRecord
 	if err != nil {
 		return nil, err
 	}
-	return GetTopNVectorRecords(records, max), nil
+	return getTopNVectorRecords(records, max), nil
+}
+
+func getTopNVectorRecords(records []VectorRecord, max int) []VectorRecord {
+	// Sort the records slice in descending order based on CosineDistance
+	sort.Slice(records, func(i, j int) bool {
+		return records[i].CosineDistance > records[j].CosineDistance
+	})
+
+	// Return the first max records or all if less than three
+	if len(records) < max {
+		return records
+	}
+	return records[:max]
 }

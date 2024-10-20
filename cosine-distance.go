@@ -2,9 +2,17 @@ package daphnia
 
 import (
 	"math"
-	"sort"
-
 )
+
+/*
+Cosine Similarity:
+
+- Measures the cosine of the angle between two vectors, regardless of their magnitude.
+- Values range from -1 to 1 (1 indicating identical vectors, 0 indicating orthogonal vectors, -1 indicating opposite vectors).
+- Particularly useful for comparing documents or text embeddings.
+
+CosineDistance calculates the dot product and magnitudes of the vectors to determine their similarity.
+*/
 
 func dotProduct(v1 []float64, v2 []float64) float64 {
 	// Calculate the dot product of two vectors
@@ -27,17 +35,4 @@ func CosineDistance(v1, v2 []float64) float64 {
 		return 0.0
 	}
 	return product / (norm1 * norm2)
-}
-
-func GetTopNVectorRecords(records []VectorRecord, max int) []VectorRecord {
-	// Sort the records slice in descending order based on CosineDistance
-	sort.Slice(records, func(i, j int) bool {
-		return records[i].CosineDistance > records[j].CosineDistance
-	})
-
-	// Return the first max records or all if less than three
-	if len(records) < max {
-		return records
-	}
-	return records[:max]
 }
