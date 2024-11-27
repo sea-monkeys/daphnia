@@ -1,7 +1,8 @@
-go 1.22.1
+go 1.23.1
 
 use (
     01-demo
     02-demo
     03-ollama-demo
+    04-ollama-docker
 )

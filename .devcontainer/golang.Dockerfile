@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM ubuntu:23.10
+FROM --platform=$BUILDPLATFORM ubuntu:22.04
 
 LABEL maintainer="@k33g_org"
 

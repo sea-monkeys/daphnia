@@ -1,6 +1,6 @@
 module 02-demo
 
-go 1.22.1
+go 1.23.1
 
 require github.com/sea-monkeys/daphnia v0.0.2
 
