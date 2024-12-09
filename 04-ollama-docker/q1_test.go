@@ -21,7 +21,8 @@ func TestQuestion1(t *testing.T) {
 	vectorStore := daphnia.VectorStore{}
 	vectorStore.Initialize("06102023.gob")
 
-	ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	//ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	ollamaUrl, errParse := url.Parse("http://localhost:11434")
 	if errParse != nil {
 		log.Fatal("😡:", errParse)
 	}
@@ -53,7 +54,7 @@ func TestQuestion1(t *testing.T) {
 
 	for _, similarity := range similarities {
 		fmt.Println()
-		fmt.Println("Cosine distance:", similarity.CosineDistance)
+		fmt.Println("Cosine similarity:", similarity.CosineSimilarity)
 
 		fmt.Println(similarity.Prompt)
 	}

@@ -54,7 +54,7 @@ func main() {
 
 	for _, similarity := range similarities {
 		fmt.Println()
-		fmt.Println("Cosine distance:", similarity.CosineDistance)
+		fmt.Println("Cosine similarity:", similarity.CosineSimilarity)
 
 		fmt.Println(similarity.Prompt)
 	}

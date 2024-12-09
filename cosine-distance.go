@@ -1,38 +1,39 @@
 package daphnia
 
 import (
+	"errors"
 	"math"
 )
 
-/*
-Cosine Similarity:
-
-- Measures the cosine of the angle between two vectors, regardless of their magnitude.
-- Values range from -1 to 1 (1 indicating identical vectors, 0 indicating orthogonal vectors, -1 indicating opposite vectors).
-- Particularly useful for comparing documents or text embeddings.
-
-CosineDistance calculates the dot product and magnitudes of the vectors to determine their similarity.
-*/
-
-func dotProduct(v1 []float64, v2 []float64) float64 {
-	// Calculate the dot product of two vectors
-	sum := 0.0
-	for i := range v1 {
-		sum += v1[i] * v2[i]
+// CosineSimilarity calculates the cosine similarity between two vectors
+// Returns a value between -1 and 1, where:
+// 1 means vectors are identical
+// 0 means vectors are perpendicular
+// -1 means vectors are opposite
+func CosineSimilarity(vec1, vec2 []float64) (float64, error) {
+	if len(vec1) != len(vec2) {
+		return 0, errors.New("vectors must have the same length")
 	}
-	return sum
+
+	// Calculate dot product
+	dotProduct := 0.0
+	magnitude1 := 0.0
+	magnitude2 := 0.0
+
+	for i := 0; i < len(vec1); i++ {
+		dotProduct += vec1[i] * vec2[i]
+		magnitude1 += vec1[i] * vec1[i]
+		magnitude2 += vec2[i] * vec2[i]
+	}
+
+	magnitude1 = math.Sqrt(magnitude1)
+	magnitude2 = math.Sqrt(magnitude2)
+
+	// Check for zero magnitudes to avoid division by zero
+	if magnitude1 == 0 || magnitude2 == 0 {
+		return 0, errors.New("vector magnitude cannot be zero")
+	}
+
+	return dotProduct / (magnitude1 * magnitude2), nil
 }
 
-// CosineDistance calculates the cosine distance between two vectors
-func CosineDistance(v1, v2 []float64) float64 {
-	// Calculate the cosine distance between two vectors
-	product := dotProduct(v1, v2)
-
-	norm1 := math.Sqrt(dotProduct(v1, v1))
-	norm2 := math.Sqrt(dotProduct(v2, v2))
-	if norm1 <= 0.0 || norm2 <= 0.0 {
-		// Handle potential division by zero
-		return 0.0
-	}
-	return product / (norm1 * norm2)
-}

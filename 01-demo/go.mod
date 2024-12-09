@@ -2,7 +2,7 @@ module 01-demo
 
 go 1.23.1
 
-require github.com/sea-monkeys/daphnia v0.0.2
+require github.com/sea-monkeys/daphnia v0.0.3
 
 require (
 	github.com/google/uuid v1.6.0 // indirect

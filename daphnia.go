@@ -15,7 +15,7 @@ type VectorRecord struct {
 	Id             string    `json:"id"`
 	Prompt         string    `json:"prompt"` // chunk of text that the vector represents
 	Embedding      []float64 `json:"embedding"`
-	CosineDistance float64
+	CosineSimilarity float64
 	Metadata       map[string]interface{} `json:"metadata"` // additional metadata
 
 	// If you want to manage the life time of the vector record
@@ -109,9 +109,9 @@ func (vs *VectorStore) SearchSimilarities(embeddingFromQuestion VectorRecord, li
 	}
 
 	for _, v := range allRecords {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
-		if distance >= limit {
-			v.CosineDistance = distance
+		similarity, _ := CosineSimilarity(embeddingFromQuestion.Embedding, v.Embedding)
+		if similarity >= limit {
+			v.CosineSimilarity = similarity
 			records = append(records, v)
 		}
 	}
@@ -133,7 +133,7 @@ func (vs *VectorStore) SearchTopNSimilarities(embeddingFromQuestion VectorRecord
 func getTopNVectorRecords(records []VectorRecord, max int) []VectorRecord {
 	// Sort the records slice in descending order based on CosineDistance
 	sort.Slice(records, func(i, j int) bool {
-		return records[i].CosineDistance > records[j].CosineDistance
+		return records[i].CosineSimilarity > records[j].CosineSimilarity
 	})
 
 	// Return the first max records or all if less than three

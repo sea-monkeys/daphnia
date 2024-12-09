@@ -129,8 +129,8 @@ func TestVectorStore(t *testing.T) {
 		}
 
 		for _, result := range results {
-			if result.CosineDistance < 0.5 {
-				t.Errorf("Expected cosine distance >= 0.5, got %f", result.CosineDistance)
+			if result.CosineSimilarity < 0.5 {
+				t.Errorf("Expected cosine similarity >= 0.5, got %f", result.CosineSimilarity)
 			}
 		}
 	})
@@ -150,13 +150,13 @@ func TestVectorStore(t *testing.T) {
 		}
 
 		for _, result := range results {
-			if result.CosineDistance < 0.5 {
-				t.Errorf("Expected cosine distance >= 0.5, got %f", result.CosineDistance)
+			if result.CosineSimilarity < 0.5 {
+				t.Errorf("Expected cosine similarity >= 0.5, got %f", result.CosineSimilarity)
 			}
 		}
 
-		if len(results) > 1 && results[0].CosineDistance < results[1].CosineDistance {
-			t.Errorf("Expected results to be sorted in descending order of cosine distance")
+		if len(results) > 1 && results[0].CosineSimilarity < results[1].CosineSimilarity {
+			t.Errorf("Expected results to be sorted in descending order of cosine similarity")
 		}
 	})
 }
@@ -196,7 +196,7 @@ func TestCosineDistance(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result := CosineDistance(tc.v1, tc.v2)
+			result, _ := CosineSimilarity(tc.v1, tc.v2)
 			if !almostEqual(result, tc.expected, 1e-6) {
 				t.Errorf("Expected %v, got %v", tc.expected, result)
 			}

@@ -29,7 +29,9 @@ func TestGenerate(t *testing.T) {
 	vectorStore := daphnia.VectorStore{}
 	vectorStore.Initialize("06102023.gob")
 
-	ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	//ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	ollamaUrl, errParse := url.Parse("http://localhost:11434")
+
 	if errParse != nil {
 		log.Fatal("😡:", errParse)
 	}

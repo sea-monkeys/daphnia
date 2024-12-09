@@ -20,7 +20,9 @@ func main() {
 	vectorStore := daphnia.VectorStore{}
 	vectorStore.Initialize("vectors.gob")
 
-	ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	//ollamaUrl, errParse := url.Parse("http://host.docker.internal:11434")
+	ollamaUrl, errParse := url.Parse("http://localhost:11434")
+
 	if errParse != nil {
 		log.Fatal("😡:", errParse)
 	}
@@ -77,7 +79,7 @@ func main() {
 	similarities, _ := vectorStore.SearchTopNSimilarities(embeddingFromQuestion, 0.5, 2)
 
 	for _, sim := range similarities {
-		fmt.Println(sim.Prompt, sim.CosineDistance)
+		fmt.Println(sim.Prompt, sim.CosineSimilarity)
 	}
 
 }
